@@ -1,0 +1,176 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title|default('Article') }} - Game Warrior{% endblock %}
+
+{% block body %}
+
+    <!-- Latest news section -->
+    <div class="latest-news-section">
+        <div class="ln-title">Latest News</div>
+        <div class="news-ticker">
+            <div class="news-ticker-contant">
+                {% for news in latestNews|default([]) %}
+                    <div class="nt-item">
+                        <span class="{{ news.category }}">{{ news.category }}</span>
+                        {{ news.title }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Latest news section end -->
+
+    <!-- Page info section -->
+    <section class="page-info-section page-info-game set-bg" data-setbg="{{ asset(post.headerImage|default('img/page-top-bg/2.jpg')) }}">
+        <div class="pi-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-6 text-white">
+                        <h2>{{ post.title }}</h2>
+                        <p>{{ post.subtitle|default('') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page info section -->
+
+    <!-- Page section -->
+    <section class="page-section single-blog-page spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-thumb set-bg" data-setbg="{{ asset(post.image) }}">
+                        <div class="cata new">{{ post.genre|default('Sans genre') }}</div>
+                        <div class="rgi-extra">
+                            <div class="rgi-star"><img src="{{ asset('img/icons/star.png') }}" alt=""></div>
+                            <div class="rgi-heart"><img src="{{ asset('img/icons/heart.png') }}" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <h3>{{ post.heading }}</h3>
+                        <a href="" class="meta-comment">{{ post.comments|length }} comment{{ post.comments|length > 1 ? 's' : '' }}</a>
+                        {% for paragraph in post.body|default([]) %}
+                            <p>{{ paragraph }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="comment-warp">
+                        <h4 class="comment-title">Top Coments</h4>
+                        <ul class="comment-list">
+                            {% for comment in post.comments|default([]) %}
+                                <li>
+                                    <div class="comment">
+                                        <div class="comment-avator set-bg" data-setbg="{{ asset(comment.authorAvatar) }}"></div>
+                                        <div class="comment-content">
+                                            <h5>{{ comment.author }} <span>{{ comment.title }}</span></h5>
+                                            <p>{{ comment.content }}</p>
+                                            <a href="" class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="comment-form-warp">
+                        <div class="comment-form-warp">
+    <h4 class="comment-title">Leave Your Comment</h4>
+
+    {% for message in app.flashes('success') %}
+        <p class="text-success">{{ message }}</p>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <p class="text-danger">{{ message }}</p>
+    {% endfor %}
+
+    <form class="comment-form" method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token('comment' ~ post.id) }}">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" name="name" placeholder="Pseudo" required>
+            </div>
+            <div class="col-md-6">
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="col-lg-12">
+                <input type="text" name="subject" placeholder="Titre" required>
+                <textarea name="message" placeholder="Message" required></textarea>
+                <button class="site-btn btn-sm" type="submit">Send</button>
+            </div>
+        </div>
+    </form>
+</div>
+                </div>
+                <!-- sidebar -->
+                <div class="col-lg-4 col-md-7 sidebar pt-5 pt-lg-0">
+                    <!-- widget -->
+                    <div class="widget-item">
+                        <form class="search-widget">
+                            <input type="text" placeholder="Search">
+                            <button><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                    <!-- widget -->
+                    <div class="widget-item">
+                        <h4 class="widget-title">Latest Posts</h4>
+                        <div class="latest-blog">
+                            {% for blogPost in latestBlogPosts|default([]) %}
+                                <div class="lb-item">
+                                    <div class="lb-thumb set-bg" data-setbg="{{ asset(blogPost.image) }}"></div>
+                                    <div class="lb-content">
+                                        <div class="lb-date">{{ blogPost.date }}</div>
+                                        <p>{{ blogPost.excerpt }}</p>
+                                        <a href="#" class="lb-author">By {{ blogPost.author }}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- widget -->
+                    <div class="widget-item">
+                        <h4 class="widget-title">Top Comments</h4>
+                        <div class="top-comment">
+                            {% for comment in topComments|default([]) %}
+                                <div class="tc-item">
+                                    <div class="tc-thumb set-bg" data-setbg="{{ asset(comment.authorAvatar) }}"></div>
+                                    <div class="tc-content">
+                                        <p><a href="#">{{ comment.author }}</a> <span>on</span> {{ comment.excerpt }}</p>
+                                        <div class="tc-date">{{ comment.date }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if featuredPost is defined and featuredPost %}
+                        <!-- widget -->
+                        <div class="widget-item">
+                            <div class="feature-item set-bg" data-setbg="{{ asset(featuredPost.image) }}">
+                                <span class="cata {{ featuredPost.category }}">{{ featuredPost.category }}</span>
+                                <div class="fi-content text-white">
+                                    <h5><a href="#">{{ featuredPost.title }}</a></h5>
+                                    <p>{{ featuredPost.description }}</p>
+                                    <a href="#" class="fi-comment">{{ featuredPost.comments }} Comments</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if featuredReview is defined and featuredReview %}
+                        <!-- widget -->
+                        <div class="widget-item">
+                            <div class="review-item">
+                                <div class="review-cover set-bg" data-setbg="{{ asset(featuredReview.image) }}">
+                                    <div class="score {{ featuredReview.scoreColor|default('yellow') }}">{{ featuredReview.score }}</div>
+                                </div>
+                                <div class="review-text">
+                                    <h5>{{ featuredReview.title }}</h5>
+                                    <p>{{ featuredReview.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page section end -->
+
+{% endblock %}

@@ -1,3 +1,23 @@
 body {
     background-color: skyblue;
 }
+
+/* Lien qui recouvre toute la carte / l'image */
+.card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+.feature-item,
+.rgi-thumb {
+    position: relative;
+}
+
+/* Le titre garde sa couleur, même au survol */
+.game-link,
+.game-link:hover,
+.game-link:focus {
+    color: inherit;
+    text-decoration: none;
+}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog - Game Warrior{% endblock %}
+
+{% block body %}
+
+    <!-- Page info section -->
+    <section class="page-info-section set-bg" style="background-color: #858585; background-blend-mode: multiply;" data-setbg="{{ asset('img/page-top-bg/2.jpg') }}">
+        <div class="pi-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-6 text-white">
+                        <h2>Blog</h2>
+                        <p>Retrouvez l'article et les commentaires de chaque jeu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page info section end -->
+
+    <!-- Page section -->
+    <section class="page-section blog-page spad">
+        <div class="container">
+            <div class="row">
+                {% for post in posts %}
+                    <div class="col-lg-6 col-md-6 d-flex">
+                        <div class="blog-list-card">
+                            <a class="blog-list-img" href="{{ path('app_blog', {slug: post.slug}) }}">
+                                <img src="{{ asset(post.image) }}" alt="{{ post.title }}">
+                                <div class="cata new">{{ post.genre }}</div>
+                            </a>
+                            <div class="blog-list-body">
+                                <div class="blog-list-meta">
+                                    {{ post.commentsCount }} commentaire{{ post.commentsCount > 1 ? 's' : '' }}
+                                </div>
+                                <h3>{{ post.title }}</h3>
+                                <p>{{ post.description|length > 250 ? post.description|slice(0, 250) ~ '…' : post.description }}</p>
+                                <a href="{{ path('app_blog', {slug: post.slug}) }}" class="read-more">Lire l'article &raquo;</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-12"><p>Aucun article pour le moment.</p></div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Page section end -->
+
+{% endblock %}

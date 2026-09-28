@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ j_v.titre }}{% endblock %}
+
+{% block body %}
+<section class="spad">
+    <div class="container">
+        <h2 class="mb-4">{{ j_v.titre }}</h2>
+
+        <table class="table">
+            <tbody>
+                <tr><th>Id</th><td>{{ j_v.id }}</td></tr>
+                <tr><th>Titre</th><td>{{ j_v.titre }}</td></tr>
+                <tr><th>Genre</th><td>{{ j_v.genre ? j_v.genre.nom : '' }}</td></tr>
+                <tr><th>Date de sortie</th><td>{{ j_v.dateSortie ? j_v.dateSortie|date('d/m/Y') : '' }}</td></tr>
+                <tr><th>Description</th><td>{{ j_v.description }}</td></tr>
+                <tr><th>Détails</th><td>{{ j_v.details }}</td></tr>
+                <tr><th>Image</th><td>{{ j_v.image }}</td></tr>
+            </tbody>
+        </table>
+
+        <p>
+            <a href="{{ path('app_j_v_index') }}">&laquo; Retour à la liste</a> |
+            <a href="{{ path('app_j_v_edit', {'id': j_v.id}) }}">Modifier</a>
+        </p>
+
+        {{ include('jv/_delete_form.html.twig') }}
+    </div>
+</section>
+{% endblock %}

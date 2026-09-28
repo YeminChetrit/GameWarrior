@@ -1,0 +1,6 @@
+<ul class="sub-menu">
+    <li><a href="{{ path('app_games') }}">Tous les genres</a></li>
+    {% for genre in genres %}
+        <li><a href="{{ path('app_games', {genre: genre.slug}) }}">{{ genre.nom }}</a></li>
+    {% endfor %}
+</ul>

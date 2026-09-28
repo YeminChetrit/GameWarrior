@@ -1,6 +1,9 @@
 twig:
-    file_name_pattern: '*.twig'
-
+    globals:
+        latestNews:
+            - { category: 'new', title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
+            - { category: 'strategy', title: 'Isum dolor sit amet, consectetur adipiscing elit.' }
+            - { category: 'racing', title: 'Isum dolor sit amet, consectetur adipiscing elit.' }
 when@test:
     twig:
         strict_variables: true

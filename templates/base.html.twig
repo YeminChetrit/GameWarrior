@@ -1,24 +1,99 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <title>{% block title %}Game Warrior Template{% endblock %}</title>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="description" content="Game Warrior Template">
+    <meta name="keywords" content="warrior, game, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        {% set frankenphp_hot_reload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
-        {% if frankenphp_hot_reload %}
-        <meta name="frankenphp-hot-reload:url" content="{{ frankenphp_hot_reload }}">
-        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
-        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
-        {% endif %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i"
+          rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="/css/style.css?v={{ 'now'|date('U') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Header -->
+<header class="header-section">
+    <div class="container">
+
+        <a class="site-logo" href="{{ path('app_home') }}">
+            <img src="{{ asset('img/logo.png') }}" alt="">
+        </a>
+
+        <div class="user-panel">
+            <a href="#">Login</a> /
+            <a href="#">Register</a>
+        </div>
+
+        <div class="nav-switch">
+            <i class="fa fa-bars"></i>
+        </div>
+
+        <nav class="main-menu">
+            <ul>
+            <li><a href="{{ path('app_home') }}" class="{{ app.request.attributes.get('_route') == 'app_home' ? 'active' }}">Home</a></li>
+            <li class="has-submenu">
+    <a href="{{ path('app_games') }}" class="{{ app.request.attributes.get('_route') == 'app_games' ? 'active' }}">Games</a>
+    {{ render(controller('App\\Controller\\Controller::genresMenu')) }}
+</li>
+            <li><a href="{{ path('app_blog_list') }}" class="{{ app.request.attributes.get('_route') in ['app_blog_list', 'app_blog'] ? 'active' }}">Blog</a></li>
+            <li><a href="{{ path('app_forum') }}" class="{{ app.request.attributes.get('_route') == 'app_forum' ? 'active' }}">Forums</a></li>
+            <li><a href="{{ path('app_contact') }}" class="{{ app.request.attributes.get('_route') == 'app_contact' ? 'active' }}">Contact</a></li>
+        </ul>
+        </nav>
+
+    </div>
+</header>
+
+{% block body %}{% endblock %}
+
+<!-- Footer -->
+<footer class="footer-section">
+    <div class="container">
+
+        <ul class="footer-menu">
+    <li><a href="{{ path('app_home') }}">Home</a></li>
+    <li><a href="{{ path('app_games') }}">Games</a></li>
+    <li><a href="{{ path('app_blog_list') }}">Blog</a></li>
+    <li><a href="{{ path('app_forum') }}">Forums</a></li>
+    <li><a href="{{ path('app_contact') }}">Contact</a></li>
+</ul>
+
+        <p class="copyright">
+            Copyright &copy; {{ "now"|date("Y") }}
+            All rights reserved
+        </p>
+
+    </div>
+</footer>
+
+<!-- Javascript -->
+<script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.marquee.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+
+</body>
 </html>

@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Our Community - Game Warrior{% endblock %}
+
+{% block body %}
+
+    <!-- Latest news section -->
+    <div class="latest-news-section">
+        <div class="ln-title">Latest News</div>
+        <div class="news-ticker">
+            <div class="news-ticker-contant">
+                {% for news in latestNews|default([]) %}
+                    <div class="nt-item">
+                        <span class="{{ news.category }}">{{ news.category }}</span>
+                        {{ news.title }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Latest news section end -->
+
+    <!-- Page info section -->
+    <section class="page-info-section set-bg" style="background-color: #858585; background-blend-mode: multiply;" data-setbg="{{ asset('img/page-top-bg/4.jpg') }}">
+        <div class="pi-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-6 text-white">
+                        <h2>Our Community</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page info section -->
+
+    <!-- Page section -->
+    <section class="page-section community-page set-bg" data-setbg="{{ asset('img/community-bg.jpg') }}">
+        <div class="community-warp spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="community-top-title">All Members ({{ membersCount|default(0) }})</h3>
+                    </div>
+                    <div class="col-md-6 text-lg-right">
+                        <form class="community-filter">
+                            <label for="fdf5">Show</label>
+                            <select id="fdf5">
+                                <option value="#">Everything</option>
+                                <option value="#">Everything</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <ul class="community-post-list">
+                    {% for post in communityPosts|default([]) %}
+                        <li>
+                            <div class="community-post">
+                                <div class="author-avator set-bg" data-setbg="{{ asset(post.authorAvatar) }}"></div>
+                                <div class="post-content">
+                                    <h5>{{ post.author }}<span>posted an update</span></h5>
+                                    <div class="post-date">{{ post.date }}</div>
+                                    <p>{{ post.content }}</p>
+                                    {% if post.attachment is defined and post.attachment %}
+                                        <div class="attachment-file">
+                                            <img src="{{ asset(post.attachment) }}" alt="">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li>Aucune publication pour le moment.</li>
+                    {% endfor %}
+                </ul>
+                <div class="site-pagination sp-style-2">
+                    <span class="active">01.</span>
+                    <a href="#">02.</a>
+                    <a href="#">03.</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page section end -->
+
+{% endblock %}

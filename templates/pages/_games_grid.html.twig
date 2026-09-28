@@ -1,0 +1,21 @@
+{% for game in games|default([]) %}
+    <div class="col-md-6">
+        <div class="review-item">
+            <div class="review-cover set-bg" data-setbg="{{ asset(game.image) }}">
+                <a href="{{ path('app_blog', {slug: game.slug}) }}" class="card-link" aria-label="{{ game.title }}"></a>
+                <div class="score {{ game.scoreColor|default('yellow') }}">{{ game.score }}</div>
+            </div>
+            <div class="review-text">
+                <h4><a href="{{ path('app_blog', {slug: game.slug}) }}" class="game-link">{{ game.title }}</a></h4>
+                <div class="rating">
+                    {% for i in 1..5 %}
+                        <i class="fa fa-star{{ i > game.rating|default(0) ? ' is-fade' : '' }}"></i>
+                    {% endfor %}
+                </div>
+                <p>{{ game.description }}</p>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p>Aucun jeu disponible pour le moment.</p>
+{% endfor %}

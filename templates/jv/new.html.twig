@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un jeu{% endblock %}
+
+{% block body %}
+<section class="spad">
+    <div class="container">
+        <h2 class="mb-4">Ajouter un jeu</h2>
+
+        {{ include('jv/_form.html.twig', {'button_label': 'Ajouter'}) }}
+
+        <p class="mt-4"><a href="{{ path('app_j_v_index') }}">&laquo; Retour à la liste</a></p>
+    </div>
+</section>
+{% endblock %}

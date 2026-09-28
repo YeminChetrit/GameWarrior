@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeux vidéo - Administration{% endblock %}
+
+{% block body %}
+<section class="spad">
+    <div class="container">
+        <h2 class="mb-4">Jeux vidéo</h2>
+
+        <a href="{{ path('app_j_v_new') }}" class="site-btn btn-sm mb-4">Ajouter un jeu</a>
+
+        <div class="table-responsive mt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Genre</th>
+                        <th>Date de sortie</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for j_v in j_vs %}
+                    <tr>
+                        <td>{{ j_v.id }}</td>
+                        <td>{{ j_v.titre }}</td>
+                        <td>{{ j_v.genre ? j_v.genre.nom : '' }}</td>
+                        <td>{{ j_v.dateSortie ? j_v.dateSortie|date('d/m/Y') : '' }}</td>
+                        <td>{{ j_v.image }}</td>
+                        <td>
+                            <a href="{{ path('app_j_v_show', {'id': j_v.id}) }}">Voir</a> |
+                            <a href="{{ path('app_j_v_edit', {'id': j_v.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucun jeu pour le moment.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
