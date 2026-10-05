@@ -40,8 +40,12 @@
         </a>
 
         <div class="user-panel">
-            <a href="#">Login</a> /
-            <a href="#">Register</a>
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}">Logout ({{ app.user.pseudo }})</a>
+            {% else %}
+                <a href="{{ path('app_login') }}">Login</a> /
+                <a href="{{ path('app_register') }}">Register</a>
+            {% endif %}
         </div>
 
         <div class="nav-switch">
